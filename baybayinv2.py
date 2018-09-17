@@ -8,9 +8,13 @@ TRAIN_DIR = 'train_jpg'
 TEST_DIR = 'train_jpg'
 IMG_SIZE = 28
 LR = 1e-4
-NUM_OUTPUT = 3
+NUM_OUTPUT = 0
 
-MODEL_NAME = 'baybayin-v1-{}-{}.model'.format(LR, '4convlayers') # just so we remember which saved model is which, sizes must match
+FILTER_SIZE = 7
+NUM_EPOCHS = 50
+FIRST_NUM_CHANNEL = 8
+
+MODEL_NAME = 'baybayin-v2-{}-{}.model'.format(LR, '4convlayers') # just so we remember which saved model is which, sizes must match
 
 def label_character(img):
     word_label = img.split('.')[0]
@@ -75,6 +79,7 @@ def label_character(img):
     elif word_label == 'ye_yi':   return [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     elif word_label == 'yo_yu':   return [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     elif word_label == 'y':       return [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    print("UNLABEL (will cause an error):", img)
 
 def create_train_data():
     training_data = []
@@ -115,19 +120,19 @@ from tflearn.layers.estimator import regression
 
 convnet = input_data(shape=[None, IMG_SIZE, IMG_SIZE, 1], name='input')
 
-convnet = conv_2d(convnet, 16, 5, activation='relu')
-convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, FIRST_NUM_CHANNEL, FILTER_SIZE, activation='relu')
+convnet = max_pool_2d(convnet, FILTER_SIZE)
 
-convnet = conv_2d(convnet, 32, 5, activation='relu')
-convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*2, FILTER_SIZE, activation='relu')
+convnet = max_pool_2d(convnet, FILTER_SIZE)
 
-convnet = conv_2d(convnet, 32, 5, activation='relu')
-convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*4, FILTER_SIZE, activation='relu')
+convnet = max_pool_2d(convnet, FILTER_SIZE)
 
-convnet = conv_2d(convnet, 16, 5, activation='relu')
-convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*8, FILTER_SIZE, activation='relu')
+convnet = max_pool_2d(convnet, FILTER_SIZE)
 
-convnet = fully_connected(convnet, 1024, activation='relu')
+convnet = fully_connected(convnet, FIRST_NUM_CHANNEL*16, activation='relu')
 convnet = dropout(convnet, 0.8)
 
 convnet = fully_connected(convnet, NUM_OUTPUT, activation='softmax')
@@ -137,8 +142,8 @@ model = tflearn.DNN(convnet, tensorboard_dir='log')
 ##END of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
 
 
-train = train_data[:1200]
-test = train_data[-150:]
+train = train_data[:6000]
+test = train_data[-1000:]
 
 
 X = np.array([i[0] for i in train]).reshape(-1,IMG_SIZE,IMG_SIZE,1)
@@ -148,7 +153,7 @@ test_x = np.array([i[0] for i in test]).reshape(-1,IMG_SIZE,IMG_SIZE,1)
 test_y = [i[1] for i in test]
 
 
-model.fit({'input': X}, {'targets': Y}, n_epoch=100, validation_set=({'input': test_x}, {'targets': test_y}), 
+model.fit({'input': X}, {'targets': Y}, n_epoch=NUM_EPOCHS, validation_set=({'input': test_x}, {'targets': test_y}), 
     snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
 
 model.save(MODEL_NAME)

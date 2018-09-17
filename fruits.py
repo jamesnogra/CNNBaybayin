@@ -82,8 +82,8 @@ convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categori
 model = tflearn.DNN(convnet, tensorboard_dir='log')
 
 
-train = train_data[:450]
-test = train_data[-35:]
+train = train_data[:400]
+test = train_data[-40:]
 
 
 X = np.array([i[0] for i in train]).reshape(-1,IMG_SIZE,IMG_SIZE,1)

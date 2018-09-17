@@ -6,9 +6,13 @@ from random import shuffle # mixing up or currently ordered data that might lead
 LR = 1e-4
 TRAIN_DIR = 'train_jpg'
 #MODEL_NAME = 'baybayinvowel-v1-{}-{}.model'.format(LEARNING_RATE, '2convlayers')
-MODEL_NAME = 'baybayin-v1-{}-{}.model'.format(LR, '4convlayers')
+MODEL_NAME = 'baybayin-v2-{}-{}.model'.format(LR, '4convlayers')
 IMG_SIZE = 28
 NUM_OUTPUT = 59
+
+FILTER_SIZE = 5
+NUM_EPOCHS = 50
+FIRST_NUM_CHANNEL = 16
 
 
 ##START of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
@@ -19,19 +23,19 @@ from tflearn.layers.estimator import regression
 
 convnet = input_data(shape=[None, IMG_SIZE, IMG_SIZE, 1], name='input')
 
-convnet = conv_2d(convnet, 16, 5, activation='relu')
-convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, FIRST_NUM_CHANNEL, FILTER_SIZE, activation='relu')
+convnet = max_pool_2d(convnet, FILTER_SIZE)
 
-convnet = conv_2d(convnet, 32, 5, activation='relu')
-convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*2, FILTER_SIZE, activation='relu')
+convnet = max_pool_2d(convnet, FILTER_SIZE)
 
-convnet = conv_2d(convnet, 32, 5, activation='relu')
-convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*4, FILTER_SIZE, activation='relu')
+convnet = max_pool_2d(convnet, FILTER_SIZE)
 
-convnet = conv_2d(convnet, 16, 5, activation='relu')
-convnet = max_pool_2d(convnet, 5)
+convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*8, FILTER_SIZE, activation='relu')
+convnet = max_pool_2d(convnet, FILTER_SIZE)
 
-convnet = fully_connected(convnet, 1024, activation='relu')
+convnet = fully_connected(convnet, FIRST_NUM_CHANNEL*16, activation='relu')
 convnet = dropout(convnet, 0.8)
 
 convnet = fully_connected(convnet, NUM_OUTPUT, activation='softmax')
@@ -49,14 +53,14 @@ if os.path.exists('{}.meta'.format(MODEL_NAME)):
 
 fig=plt.figure()
 
-for num,data in enumerate(test_data[:12]):
+for num,data in enumerate(test_data[:70]):
     # cat: [1,0]
     # dog: [0,1]
     
     img_num = data[1]
     img_data = data[0]
     
-    y = fig.add_subplot(3,4,num+1)
+    y = fig.add_subplot(5,14,num+1)
     orig = img_data
     data = img_data.reshape(IMG_SIZE,IMG_SIZE,1)
     #model_out = model.predict([data])[0]
@@ -125,7 +129,7 @@ for num,data in enumerate(test_data[:12]):
     elif (data_res==[0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).all(): str_label='YE/YI'
     elif (data_res==[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).all(): str_label='YO/YU'
     elif (data_res==[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]).all(): str_label='Y'
-    else: str_label='XXX'
+    else: str_label='?'
     #elif (data_res==[0.,1.,0.]).all(): str_label='E / I'
     #elif (data_res==[0.,0.,1.]).all(): str_label='O / U'
     #str_label = model.predict([data])

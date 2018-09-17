@@ -54,14 +54,14 @@ if os.path.exists('{}.meta'.format(MODEL_NAME)):
 
 fig=plt.figure()
 
-for num,data in enumerate(test_data[:12]):
+for num,data in enumerate(test_data[:40]):
     # cat: [1,0]
     # dog: [0,1]
     
     img_num = data[1]
     img_data = data[0]
     
-    y = fig.add_subplot(3,4,num+1)
+    y = fig.add_subplot(5,8,num+1)
     orig = img_data
     data = img_data.reshape(IMG_SIZE,IMG_SIZE,1)
     #model_out = model.predict([data])[0]
