@@ -7,6 +7,8 @@ from tqdm import tqdm      # a nice pretty percentage bar for tasks. Thanks to v
 import sys
 import json
 from operator import itemgetter
+from flask_cors import CORS #pip install -U flask-cors
+import base64
 
 LR = 1e-4
 TRAIN_DIR = 'train_jpg'
@@ -66,19 +68,32 @@ def classifier(np_img):
 		return data_res_float, data_res, result_chars, result_chars[NUM_OUTPUT-1][0] #the last element is the correct classification
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/test-upload')
 def testUpload():
-	return '<form action="/classify-image" method="post" enctype="multipart/form-data"><input type="file" name="the_image" /><button type="submit">Upload</button></form>'
+	return '<form action="/classify-image1" method="post" enctype="multipart/form-data"><input type="file" name="the_image" /><button type="submit">Upload</button></form>'
 
-@app.route('/classify-image', methods=['POST'])
-def classifyImage():
+@app.route('/classify-image1', methods=['POST'])
+def classifyImage1():
 	try:
 		img = cv2.imdecode(np.fromstring(request.files['the_image'].read(), np.uint8), cv2.IMREAD_GRAYSCALE)
 		img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)[1] # convert image to black and white pixels
 		img = cv2.resize(img, (IMG_SIZE,IMG_SIZE))
 		res_float, res, all_res, res_char = classifier(img)
 		return jsonify({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars})	
+	except:
+		return jsonify({'status': -1, 'message': 'Probably not an image!'})
+
+@app.route('/classify-image', methods=['POST', 'OPTIONS'])
+def classifyImage():
+	try:
+		imgdata = base64.b64decode(request.form['imageData'])
+		img = cv2.imdecode(np.fromstring(imgdata, np.uint8), cv2.IMREAD_GRAYSCALE)
+		img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)[1] # convert image to black and white pixels
+		img = cv2.resize(img, (IMG_SIZE,IMG_SIZE))
+		res_float, res, all_res, res_char = classifier(img)
+		return jsonify({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars})
 	except:
 		return jsonify({'status': -1, 'message': 'Probably not an image!'})
 

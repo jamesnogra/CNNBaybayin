@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>Test Only for Baybayin</title>
+    <header name = "Access-Control-Allow-Origin" value = "*" />
+	<link rel="stylesheet" href="css/w3.css">
+	<link rel="stylesheet" href="css/draw.css">
+	<link rel="stylesheet" href="css/my.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+	<div class="drawing">
+	    <div id="sketchpadapp" class="w3-center">
+	        <canvas id="sheet" width="500" height="500"></canvas>
+	    </div>
+	    <table class="w3-table-all">
+	    	<thead>
+				<th>Character <canvas id="sheet-small" width="28" height="28"></canvas></th>
+				<th>Score</th>
+			</thead>
+			<tbody id="five-results"></tbody>
+	    </table>
+	    <div class="w3-center" id="bottom-buttons">
+	    	<button class="w3-button w3-yellow w3-xlarge" onclick="clearCanvas();"><i class="fa fa-trash"></i> Erase Everything</button>
+	    	<button class="w3-button w3-yellow w3-xlarge" onclick="submitAndUpload();"><i class="fa fa-check"></i> Submit</button>
+	    </div>
+	</div>
+
+	<div id="loader-container">
+		<div class="loader"></div>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/custom-alert.js"></script>
+	<script src="js/draw.js"></script>
+	<script src="js/characters.js"></script>
+
+</body>
+
+</html>
