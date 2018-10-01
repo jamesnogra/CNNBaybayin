@@ -10,9 +10,9 @@ MODEL_NAME = 'baybayin-v2-{}-{}.model'.format(LR, '4convlayers')
 IMG_SIZE = 28
 NUM_OUTPUT = 59
 
-FILTER_SIZE = 5
+FILTER_SIZE = 3
 NUM_EPOCHS = 50
-FIRST_NUM_CHANNEL = 16
+FIRST_NUM_CHANNEL = 32
 
 
 ##START of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
@@ -53,14 +53,14 @@ if os.path.exists('{}.meta'.format(MODEL_NAME)):
 
 fig=plt.figure()
 
-for num,data in enumerate(test_data[:70]):
+for num,data in enumerate(test_data[:12]):
     # cat: [1,0]
     # dog: [0,1]
     
     img_num = data[1]
     img_data = data[0]
     
-    y = fig.add_subplot(5,14,num+1)
+    y = fig.add_subplot(3,4,num+1)
     orig = img_data
     data = img_data.reshape(IMG_SIZE,IMG_SIZE,1)
     #model_out = model.predict([data])[0]

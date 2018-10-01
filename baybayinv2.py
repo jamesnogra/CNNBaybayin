@@ -10,9 +10,9 @@ IMG_SIZE = 28
 LR = 1e-4
 NUM_OUTPUT = 0
 
-FILTER_SIZE = 7
+FILTER_SIZE = 3
 NUM_EPOCHS = 50
-FIRST_NUM_CHANNEL = 8
+FIRST_NUM_CHANNEL = 32
 
 MODEL_NAME = 'baybayin-v2-{}-{}.model'.format(LR, '4convlayers') # just so we remember which saved model is which, sizes must match
 
@@ -121,18 +121,18 @@ from tflearn.layers.estimator import regression
 convnet = input_data(shape=[None, IMG_SIZE, IMG_SIZE, 1], name='input')
 
 convnet = conv_2d(convnet, FIRST_NUM_CHANNEL, FILTER_SIZE, activation='relu')
-convnet = max_pool_2d(convnet, FILTER_SIZE)
+convnet = max_pool_2d(convnet, 2)
 
 convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*2, FILTER_SIZE, activation='relu')
-convnet = max_pool_2d(convnet, FILTER_SIZE)
+convnet = max_pool_2d(convnet, 2)
 
 convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*4, FILTER_SIZE, activation='relu')
-convnet = max_pool_2d(convnet, FILTER_SIZE)
+convnet = max_pool_2d(convnet, 2)
 
-convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*8, FILTER_SIZE, activation='relu')
-convnet = max_pool_2d(convnet, FILTER_SIZE)
+#convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*8, FILTER_SIZE, activation='relu')
+#convnet = max_pool_2d(convnet, FILTER_SIZE)
 
-convnet = fully_connected(convnet, FIRST_NUM_CHANNEL*16, activation='relu')
+convnet = fully_connected(convnet, FIRST_NUM_CHANNEL*8, activation='relu')
 convnet = dropout(convnet, 0.8)
 
 convnet = fully_connected(convnet, NUM_OUTPUT, activation='softmax')
