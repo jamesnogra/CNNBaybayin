@@ -56,7 +56,7 @@ function submitAndUpload() {
     var pic = document.getElementById("sheet-small").toDataURL("image/png");
     pic = pic.replace(/^data:image\/(png|jpg);base64,/, "");
     // Sending the image data to Server
-    $.post("http://127.0.0.1:8080/classify-image", {'curent_character':curent_character, 'imageData':pic}, function(result) {
+    $.post("http://45.62.253.243/classify-image", {'curent_character':curent_character, 'imageData':pic}, function(result) {
 		for (var x=0; x<result.all_chars.length; x++) {
 			res.push([result.all_chars[x], result.result_float[x]]);
 		}
