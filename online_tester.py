@@ -64,7 +64,7 @@ def classifier(np_img):
 		for x in range(len(data_res)):
 			result_chars.append([all_chars[x], round((data_res_float[x]*100),4), data_res_float[x]])
 		result_chars = sorted(result_chars, key=itemgetter(2)) #sort by the res_float
-		print(result_chars)
+		#print(result_chars)
 		return data_res_float, data_res, result_chars, result_chars[NUM_OUTPUT-1][0] #the last element is the correct classification
 
 app = Flask(__name__)
