@@ -57,14 +57,13 @@ def classifier(np_img):
 	if os.path.exists('{}.meta'.format(MODEL_NAME)):
 		result_chars = []
 		model.load(MODEL_NAME)
-		print('Model',MODEL_NAME,'loaded...')
 		data = np_img.reshape(IMG_SIZE,IMG_SIZE,1)
 		data_res_float = model.predict([data])[0]
 		data_res = np.round(data_res_float, 0)
 		for x in range(len(data_res)):
 			result_chars.append([all_chars[x], round((data_res_float[x]*100),4), data_res_float[x]])
 		result_chars = sorted(result_chars, key=itemgetter(2)) #sort by the res_float
-		#print(result_chars)
+		print('Result:',result_chars[NUM_OUTPUT-1][0])
 		return data_res_float, data_res, result_chars, result_chars[NUM_OUTPUT-1][0] #the last element is the correct classification
 
 app = Flask(__name__)
