@@ -90,11 +90,11 @@ def classifyImage():
 	except:
 		return jsonify({'status': -1, 'message': 'Probably not an image!'})
 
-@app.route('/')
-def hello():
-	code = 400
-	msg = 'Bad Request'
-	return msg, code
+#@app.route('/')
+#def hello():
+#	code = 400
+#	msg = 'Bad Request'
+#	return msg, code
 
 if __name__ == '__main__':
 	app.run(debug=True, port=8080, host='0.0.0.0')
