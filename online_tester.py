@@ -92,7 +92,7 @@ def classifyImage():
 
 @app.route('/')
 def hello():
-	return "Hello World!"
+	return abort(400)
 
 if __name__ == '__main__':
 	app.run(debug=True, port=8080, host='0.0.0.0')
