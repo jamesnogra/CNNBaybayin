@@ -45,7 +45,7 @@ def api():
 
 @app.route('/test-upload')
 def testUpload():
-	return '<form action="/classify-image1" method="post" enctype="multipart/form-data"><input type="file" name="the_image" /><button type="submit">Upload</button></form>'
+	return '<form action="/classify-image1" method="post" enctype="multipart/form-data"><input type="file" name="imageData" /><button type="submit">Upload</button></form>'
 
 @app.route('/classify-image1', methods=['POST'])
 def classifyImage1():
