@@ -137,7 +137,7 @@ convnet = max_pool_2d(convnet, 2)
 #convnet = max_pool_2d(convnet, FILTER_SIZE)
 
 convnet = fully_connected(convnet, FIRST_NUM_CHANNEL*8, activation='relu')
-convnet = dropout(convnet, 0.8)
+convnet = dropout(convnet, 0.7)
 
 convnet = fully_connected(convnet, NUM_OUTPUT, activation='softmax')
 convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categorical_crossentropy', name='targets')
@@ -146,7 +146,7 @@ model = tflearn.DNN(convnet, tensorboard_dir='log')
 ##END of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
 
 
-train = train_data[:6000]
+train = train_data[:7000]
 test = train_data[-1000:]
 
 
