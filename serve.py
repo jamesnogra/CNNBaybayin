@@ -50,7 +50,7 @@ def get_model_api():
 	##END of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
 	print('LOADING MODEL:', '{}.meta'.format(MODEL_NAME))
 	result_chars = []
-	model.load('../',MODEL_NAME)
+	model.load(MODEL_NAME)
 
 	def model_api(np_img):
 		data = np_img.reshape(IMG_SIZE,IMG_SIZE,1)
