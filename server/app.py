@@ -41,3 +41,6 @@ def api():
 		return jsonify({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars})
 	except:
 		return jsonify({'status': -1, 'message': 'Probably not an image!'})
+
+if __name__ == '__main__':
+	app.run(host='0.0.0.0', debug=True)
