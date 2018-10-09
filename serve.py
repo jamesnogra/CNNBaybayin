@@ -26,9 +26,6 @@ FILTER_SIZE = 3
 NUM_EPOCHS = 50
 FIRST_NUM_CHANNEL = 32
 
-all_chars = ['A', 'E/I', 'O/U', 'BA', 'BE/BI', 'BO/BU', 'B', 'KA', 'KE/KI', 'KO/KU', 'K', 'DA', 'DE/DI', 'DO/DU', 'D', 'GA', 'GE/GI', 'GO/GU', 'G', 'HA', 'HE/HI', 'HO/HU', 'H', 'LA', 'LE/LI', 'LO/LU', 'L', 'MA', 'ME/MI', 'MO/MU', 'M', 'NA', 'NE/NI', 'NO/NU', 'N', 'NGA', 'NGE/NGI', 'NGO/NGU', 'NG', 'PA', 'PE/PI', 'PO/PU', 'P', 'SA', 'SE/SI', 'SO/SU', 'S', 'TA', 'TE/TI', 'TO/TU', 'T', 'WA', 'WE/WI', 'WO/WU', 'W', 'YA', 'YE/YI', 'YO/YU', 'Y', 'RA', 'RE/RI', 'RO/RU', 'R']
-all_chars.reverse() #revese the all_chars array because it has been encoded here in reverse
-
 def get_model_api():
 	"""Returns lambda function for api"""
 	# 1. initialize model once and for all and reload weights
@@ -53,6 +50,8 @@ def get_model_api():
 
 	def model_api(np_img):
 		result_chars = []
+		all_chars = ['A', 'E/I', 'O/U', 'BA', 'BE/BI', 'BO/BU', 'B', 'KA', 'KE/KI', 'KO/KU', 'K', 'DA', 'DE/DI', 'DO/DU', 'D', 'GA', 'GE/GI', 'GO/GU', 'G', 'HA', 'HE/HI', 'HO/HU', 'H', 'LA', 'LE/LI', 'LO/LU', 'L', 'MA', 'ME/MI', 'MO/MU', 'M', 'NA', 'NE/NI', 'NO/NU', 'N', 'NGA', 'NGE/NGI', 'NGO/NGU', 'NG', 'PA', 'PE/PI', 'PO/PU', 'P', 'SA', 'SE/SI', 'SO/SU', 'S', 'TA', 'TE/TI', 'TO/TU', 'T', 'WA', 'WE/WI', 'WO/WU', 'W', 'YA', 'YE/YI', 'YO/YU', 'Y', 'RA', 'RE/RI', 'RO/RU', 'R']
+		all_chars.reverse() #revese the all_chars array because it has been encoded here in reverse
 		data = np_img.reshape(IMG_SIZE,IMG_SIZE,1)
 		data_res_float = model.predict([data])[0]
 		data_res = np.round(data_res_float, 0)
