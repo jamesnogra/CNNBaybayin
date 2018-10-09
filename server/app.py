@@ -27,7 +27,7 @@ def server_error(e):
 	""".format(e), 500
 
 # API route
-@app.route('/api', methods=['POST'])
+@app.route('/classify-image', methods=['POST'])
 def api():
 	#get the input
 	try:
