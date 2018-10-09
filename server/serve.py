@@ -32,26 +32,25 @@ all_chars.reverse() #revese the all_chars array because it has been encoded here
 def get_model_api():
 	"""Returns lambda function for api"""
 	# 1. initialize model once and for all and reload weights
-	if os.path.exists('{}.meta'.format(MODEL_NAME)):
-		##START of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
-		convnet = input_data(shape=[None, IMG_SIZE, IMG_SIZE, 1], name='input')
-		convnet = conv_2d(convnet, FIRST_NUM_CHANNEL, FILTER_SIZE, activation='relu')
-		convnet = max_pool_2d(convnet, 2)
-		convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*2, FILTER_SIZE, activation='relu')
-		convnet = max_pool_2d(convnet, 2)
-		convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*4, FILTER_SIZE, activation='relu')
-		convnet = max_pool_2d(convnet, 2)
-		#convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*8, FILTER_SIZE, activation='relu')
-		#convnet = max_pool_2d(convnet, FILTER_SIZE)
-		convnet = fully_connected(convnet, FIRST_NUM_CHANNEL*8, activation='relu')
-		convnet = dropout(convnet, 0.8)
-		convnet = fully_connected(convnet, NUM_OUTPUT, activation='softmax')
-		convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categorical_crossentropy', name='targets')
-		model = tflearn.DNN(convnet, tensorboard_dir='log')
-		##END of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
-		print('LOADING MODEL:', '{}.meta'.format(MODEL_NAME))
-		result_chars = []
-		model.load(MODEL_NAME)
+	##START of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
+	convnet = input_data(shape=[None, IMG_SIZE, IMG_SIZE, 1], name='input')
+	convnet = conv_2d(convnet, FIRST_NUM_CHANNEL, FILTER_SIZE, activation='relu')
+	convnet = max_pool_2d(convnet, 2)
+	convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*2, FILTER_SIZE, activation='relu')
+	convnet = max_pool_2d(convnet, 2)
+	convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*4, FILTER_SIZE, activation='relu')
+	convnet = max_pool_2d(convnet, 2)
+	#convnet = conv_2d(convnet, FIRST_NUM_CHANNEL*8, FILTER_SIZE, activation='relu')
+	#convnet = max_pool_2d(convnet, FILTER_SIZE)
+	convnet = fully_connected(convnet, FIRST_NUM_CHANNEL*8, activation='relu')
+	convnet = dropout(convnet, 0.8)
+	convnet = fully_connected(convnet, NUM_OUTPUT, activation='softmax')
+	convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categorical_crossentropy', name='targets')
+	model = tflearn.DNN(convnet, tensorboard_dir='log')
+	##END of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
+	print('LOADING MODEL:', '{}.meta'.format(MODEL_NAME))
+	result_chars = []
+	model.load(MODEL_NAME)
 
 	def model_api(np_img):
 		data = np_img.reshape(IMG_SIZE,IMG_SIZE,1)
