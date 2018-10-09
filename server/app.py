@@ -12,24 +12,7 @@ import base64
 from serve import get_model_api  # see part 1.
 import base64
 
-import tflearn
-from tflearn.layers.conv import conv_2d, max_pool_2d
-from tflearn.layers.core import input_data, dropout, fully_connected
-from tflearn.layers.estimator import regression
-
-LR = 1e-4
-TRAIN_DIR = 'train_jpg'
-#MODEL_NAME = 'baybayinvowel-v1-{}-{}.model'.format(LEARNING_RATE, '2convlayers')
-MODEL_NAME = 'baybayin-v2-{}-{}.model'.format(LR, '4convlayers')
 IMG_SIZE = 28
-NUM_OUTPUT = 63
-
-FILTER_SIZE = 3
-NUM_EPOCHS = 50
-FIRST_NUM_CHANNEL = 32
-
-all_chars = ['A', 'E/I', 'O/U', 'BA', 'BE/BI', 'BO/BU', 'B', 'KA', 'KE/KI', 'KO/KU', 'K', 'DA', 'DE/DI', 'DO/DU', 'D', 'GA', 'GE/GI', 'GO/GU', 'G', 'HA', 'HE/HI', 'HO/HU', 'H', 'LA', 'LE/LI', 'LO/LU', 'L', 'MA', 'ME/MI', 'MO/MU', 'M', 'NA', 'NE/NI', 'NO/NU', 'N', 'NGA', 'NGE/NGI', 'NGO/NGU', 'NG', 'PA', 'PE/PI', 'PO/PU', 'P', 'SA', 'SE/SI', 'SO/SU', 'S', 'TA', 'TE/TI', 'TO/TU', 'T', 'WA', 'WE/WI', 'WO/WU', 'W', 'YA', 'YE/YI', 'YO/YU', 'Y', 'RA', 'RE/RI', 'RO/RU', 'R']
-all_chars.reverse() #revese the all_chars array because it has been encoded here in reverse
 
 app = Flask(__name__)
 CORS(app) # needed for cross-domain requests, allow everything by default
