@@ -61,4 +61,4 @@ def classifyImage1():
 		return jsonify({'status': -1, 'message': 'Probably not an image!'})
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', debug=True)
+	app.run(debug=True, port=8080, host='0.0.0.0')
