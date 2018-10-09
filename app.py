@@ -62,10 +62,9 @@ def testUpload():
 
 @app.route('/classify-image1', methods=['POST'])
 def classifyImage1():
-	imgdata = base64.b64decode(request.form['imageData'])
-		img = cv2.imdecode(np.fromstring(imgdata, np.uint8), cv2.IMREAD_GRAYSCALE)
-		img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)[1] # convert image to black and white pixels
-		img = cv2.resize(img, (IMG_SIZE,IMG_SIZE))
+	img = cv2.imdecode(np.fromstring(request.files['imageData'].read(), np.uint8), cv2.IMREAD_GRAYSCALE)
+	img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)[1] # convert image to black and white pixels
+	img = cv2.resize(img, (IMG_SIZE,IMG_SIZE))
 	#res_float, res, all_res, res_char = classifier(img)
 	res_float, res, all_res, res_char = model_api(img)
 	return jsonify({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars})
