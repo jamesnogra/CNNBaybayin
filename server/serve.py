@@ -48,7 +48,7 @@ def get_model_api():
 	convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categorical_crossentropy', name='targets')
 	model = tflearn.DNN(convnet, tensorboard_dir='log')
 	##END of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
-	print('LOADING MODEL:', '{}.meta'.format(MODEL_NAME))
+	print('LOADING MODEL:', '../{}.meta'.format(MODEL_NAME))
 	result_chars = []
 	model.load(MODEL_NAME)
 
