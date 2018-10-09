@@ -49,10 +49,10 @@ def get_model_api():
 	model = tflearn.DNN(convnet, tensorboard_dir='log')
 	##END of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
 	print('LOADING MODEL:', '{}.meta'.format(MODEL_NAME))
-	result_chars = []
 	model.load(MODEL_NAME)
 
 	def model_api(np_img):
+		result_chars = []
 		data = np_img.reshape(IMG_SIZE,IMG_SIZE,1)
 		data_res_float = model.predict([data])[0]
 		data_res = np.round(data_res_float, 0)
