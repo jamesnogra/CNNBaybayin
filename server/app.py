@@ -1,8 +1,14 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from serve import get_model_api  # see part 1.
+from flask import Flask, request, Response
+from flask.json import jsonify
+import cv2                 # working with, mainly resizing, images
+import numpy as np         # dealing with arrays
+import os                  # dealing with directories
+from tqdm import tqdm      # a nice pretty percentage bar for tasks. Thanks to viewer Daniel BA1/4hler for this suggestion
+import sys
+import json
+from operator import itemgetter
+from flask_cors import CORS #pip install -U flask-cors
 import base64
-
 app = Flask(__name__)
 CORS(app) # needed for cross-domain requests, allow everything by default
 model_api = get_model_api()
