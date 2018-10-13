@@ -1,2 +1,2 @@
-model_checkpoint_path: "C:\\Users\\lenovo\\Documents\\Projects\\cnnalibata\\baybayin-v2-0.0001-4convlayers.model"
-all_model_checkpoint_paths: "C:\\Users\\lenovo\\Documents\\Projects\\cnnalibata\\baybayin-v2-0.0001-4convlayers.model"
+model_checkpoint_path: "D:\\CNNBaybayin\\baybayin-v2-0.0001-4convlayers.model"
+all_model_checkpoint_paths: "D:\\CNNBaybayin\\baybayin-v2-0.0001-4convlayers.model"
