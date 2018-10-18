@@ -145,10 +145,8 @@ convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categori
 model = tflearn.DNN(convnet, tensorboard_dir='log')
 ##END of tflearn CNN. From: https://pythonprogramming.net/tflearn-machine-learning-tutorial/
 
-
 train = train_data[:8500]
 test = train_data[-1200:]
-
 
 X = np.array([i[0] for i in train]).reshape(-1,IMG_SIZE,IMG_SIZE,1)
 Y = [i[1] for i in train]
