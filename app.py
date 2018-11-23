@@ -52,7 +52,18 @@ def api():
 	#res_float, res, all_res, res_char = classifier(img)
 	res_float, res, all_res, res_char = model_api(img)
 	#response = jsonify(output_data)
-	return jsonify({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars})
+	data = {
+		'status':1,
+		'message':'Image classification complete.', 
+		'result':res.tolist(), 
+		'result_float':res_float.tolist(), 
+		'char':res_char, 
+		'all_chars':all_chars
+	}
+    js = json.dumps(data)
+    resp = Response(js, status=200, mimetype='application/json')
+    return resp
+	#return jsonify({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars})
 #except:
 #	return jsonify({'status': -1, 'message': 'Probably not an image!'})
 
