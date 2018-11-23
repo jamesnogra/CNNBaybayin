@@ -86,7 +86,8 @@ def classifyImage():
 		img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)[1] # convert image to black and white pixels
 		img = cv2.resize(img, (IMG_SIZE,IMG_SIZE))
 		res_float, res, all_res, res_char = classifier(img)
-		return jsonify({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars})
+		return json.dumps({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars}), 200, {'ContentType':'application/json'}
+		#return jsonify({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars})
 	except:
 		return jsonify({'status': -1, 'message': 'Probably not an image!'})
 
