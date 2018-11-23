@@ -60,9 +60,9 @@ def api():
 		'char':res_char, 
 		'all_chars':all_chars
 	}
-    js = json.dumps(data)
-    resp = Response(js, status=200, mimetype='application/json')
-    return resp
+	js = json.dumps(data)
+	resp = Response(js, status=200, mimetype='application/json')
+	return resp
 	#return jsonify({'status':1, 'message':'Image classification complete.', 'result':res.tolist(), 'result_float':res_float.tolist(), 'char':res_char, 'all_chars':all_chars})
 #except:
 #	return jsonify({'status': -1, 'message': 'Probably not an image!'})
