@@ -4,6 +4,7 @@ This repository already contains the trained CNN model for Baybayin. For testing
 ### Prerequisites/Installation
 * Install python 3.6 if you are in Windows. For Mac or Ubuntu, make sure your python version is 3.x
 * If you are using Python 2.X, then use `pip2 xxx xxx` for the installations that follow
+* Open Command Prompt/Powershell/Terminal to execute the following commands
 * Install OpenCV for image manipulation ```pip install opencv-python```
 * Install numpy for arrays ```pip install numpy```
 * Install tensorflow ```pip install tensorflow```
